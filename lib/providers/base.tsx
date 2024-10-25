@@ -6,17 +6,14 @@ import { useAuthenticateStore } from "../stores/authenticate";
 import { useEffect } from "react";
 
 export function BaseProvider({ children }: { children: React.ReactNode }) {
-  const GetUserDetail = useAuthenticateStore((state) => state.GetUserDetail)
+  const GetUserDetail = useAuthenticateStore((state) => state.GetUserDetail);
 
   useEffect(() => {
-    GetUserDetail()
-  }, [])
-
-
+    GetUserDetail();
+  }, []);
 
   return (
     <ReactQueryProvider>
-
       <NextThemesProvider
         attribute="class"
         defaultTheme="dark"
@@ -24,7 +21,6 @@ export function BaseProvider({ children }: { children: React.ReactNode }) {
       >
         {children}
       </NextThemesProvider>
-
     </ReactQueryProvider>
   );
 }

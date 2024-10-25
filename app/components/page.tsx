@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { ThemeToggle } from "@/components/common/theme-toggle";
 import { BadgeDemo } from "@/components/cPage/badge";
@@ -28,8 +28,8 @@ export default function Components() {
         <ThemeToggle />
       </div>
       <div className="relative py-20">
-        <div className="container  space-y-10">
-          <div className="flex gap-20 items-center flex-wrap">
+        <div className="container space-y-10">
+          <div className="flex flex-wrap items-center gap-20">
             <AlertDialogDemo />
 
             <BadgeDemo />
@@ -50,23 +50,19 @@ export default function Components() {
           <div className="flex justify-center">
             <InputOTPPattern />
           </div>
-          <div className="flex justify-center max-w-xl mx-auto">
+          <div className="mx-auto flex max-w-xl justify-center">
             <InputDemo />
           </div>
-          <div className="flex justify-center max-w-xl mx-auto">
+          <div className="mx-auto flex max-w-xl justify-center">
             <TextareaDemo />
           </div>
           <div>
             <CardDemo className="mx-auto" />
           </div>
 
-
-
           <div className="w-full">
             <CarouselPlugin />
           </div>
-
-
         </div>
       </div>
     </>

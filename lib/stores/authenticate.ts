@@ -1,26 +1,23 @@
-import { create } from 'zustand'
-import { UserDetailType } from '../types/authenticate'
-import { useMemo } from 'react'
-import { immer } from 'zustand/middleware/immer'
-import { GetCurrentUserDetail, LogoutUser } from '../actions/authenticate'
-import { toast } from 'sonner'
-import { getAuthenticateSession } from '../authenticate'
+import { create } from "zustand";
+import { UserDetailType } from "../types/authenticate";
+import { immer } from "zustand/middleware/immer";
+import { GetCurrentUserDetail, LogoutUser } from "../actions/authenticate";
+import { toast } from "sonner";
 
 type State = {
-  userDetail: UserDetailType | null,
-  loading: boolean,
-}
+  userDetail: UserDetailType | null;
+  loading: boolean;
+};
 
 type Computeds = {
-  isLogin: () => boolean
-
-}
+  isLogin: () => boolean;
+};
 type Actions = {
-  SetLoading: (value?: boolean) => void
-  UpdateUserDetail: (data: Partial<UserDetailType>) => void
-  GetUserDetail: () => Promise<void>
-  Logout: () => Promise<void>
-}
+  SetLoading: (value?: boolean) => void;
+  UpdateUserDetail: (data: Partial<UserDetailType>) => void;
+  GetUserDetail: () => Promise<void>;
+  Logout: () => Promise<void>;
+};
 
 export const useAuthenticateStore = create<State & Actions & Computeds>()(
   immer((set, get) => ({
@@ -34,54 +31,50 @@ export const useAuthenticateStore = create<State & Actions & Computeds>()(
     // Actions - Setters
     SetLoading: (value?: boolean) =>
       set((state) => {
-        state.loading = value ?? !state.loading
+        state.loading = value ?? !state.loading;
       }),
     UpdateUserDetail: (data: Partial<UserDetailType>) =>
       set((state) => {
         if (state.userDetail) {
-          Object.assign(state.userDetail, data)
+          Object.assign(state.userDetail, data);
         } else {
-          state.userDetail = { ...data } as UserDetailType
+          state.userDetail = { ...data } as UserDetailType;
         }
       }),
 
     GetUserDetail: async () => {
-
       set((state) => {
-        state.loading = true
-      })  // Set loading to true initially
+        state.loading = true;
+      }); // Set loading to true initially
 
+      const result = await GetCurrentUserDetail();
 
-      const result = await GetCurrentUserDetail()
-
-      if (result.message)
-        toast(result.message)
+      if (result.message) toast(result.message);
       if (result.success) {
         set((state) => {
-          state.userDetail = result.data
-        })
+          state.userDetail = result.data;
+        });
       }
       set((state) => {
-        state.loading = false  // Set loading to false after fetching
-      })
+        state.loading = false; // Set loading to false after fetching
+      });
     },
     Logout: async () => {
       set((state) => {
-        state.loading = true
-      })  // Set loading to true initially
+        state.loading = true;
+      }); // Set loading to true initially
 
-      const result = await LogoutUser()
+      const result = await LogoutUser();
 
-      if (result.message)
-        toast(result.message)
+      if (result.message) toast(result.message);
       if (result.success) {
         set((state) => {
-          state.userDetail = null
-        })
+          state.userDetail = null;
+        });
       }
       set((state) => {
-        state.loading = false  // Set loading to false after fetching
-      })
+        state.loading = false; // Set loading to false after fetching
+      });
     },
   })),
-)
+);

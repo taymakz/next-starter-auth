@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,26 +7,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 
 export function DialogDemo() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">
-          مدال
-        </Button>
+        <Button variant="outline">مدال</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>ویرایش </DialogTitle>
-          <DialogDescription>
-            جزئیات حساب کاربری
-          </DialogDescription>
+          <DialogDescription>جزئیات حساب کاربری</DialogDescription>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          hi
-        </div>
+        <div className="grid gap-4 py-4">hi</div>
         <DialogFooter>
           <Button type="submit" className="w-20">
             ثبت
@@ -34,5 +28,5 @@ export function DialogDemo() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

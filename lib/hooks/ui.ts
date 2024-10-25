@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { passwordHasLowercase, passwordHasNumber, passwordHasUppercase, passwordIsValidPasswordLength } from "../validators";
+import {
+  passwordHasLowercase,
+  passwordHasNumber,
+  passwordHasUppercase,
+  passwordIsValidPasswordLength,
+} from "../validators";
 
 export function useResetPasswordValidation(password: string) {
   const [lowercaseValid, setLowercaseValid] = useState(false);
@@ -26,17 +31,17 @@ export function useResetPasswordValidation(password: string) {
 
     switch (validCount) {
       case 0:
-        return 'bg-muted w-0';
+        return "bg-muted w-0";
       case 1:
-        return 'bg-warning w-1/4';
+        return "bg-warning w-1/4";
       case 2:
-        return 'bg-yellow-500 dark:bg-yellow-400 w-2/4';
+        return "bg-yellow-500 dark:bg-yellow-400 w-2/4";
       case 3:
-        return 'bg-blue-500 dark:bg-blue-400 w-3/4';
+        return "bg-blue-500 dark:bg-blue-400 w-3/4";
       case 4:
-        return 'bg-success w-full';
+        return "bg-success w-full";
       default:
-        return '';
+        return "";
     }
   }, [lowercaseValid, uppercaseValid, numberValid, lengthValid]);
 

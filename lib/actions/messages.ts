@@ -1,15 +1,14 @@
-"use server"
+"use server";
 
+import { VerificationOTPUsageEnum } from "../types/authenticate";
+import { ApiResponseType } from "../types/response";
 
-import { VerificationOTPUsageEnum } from "../types/authenticate"
-import { ApiResponseType } from "../types/response"
+const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_API}/messages`;
 
-
-
-const BASE_URL = `${process.env.NEXT_PUBLIC_BASE_API}/messages`
-
-export async function RequestVerificationOTP(to: string, otp_usage: VerificationOTPUsageEnum): Promise<ApiResponseType<null> | null> {
-
+export async function RequestVerificationOTP(
+  to: string,
+  otp_usage: VerificationOTPUsageEnum,
+): Promise<ApiResponseType<null> | null> {
   const response = await fetch(`${BASE_URL}/verification/request/otp/`, {
     method: "POST",
     headers: {
@@ -17,13 +16,12 @@ export async function RequestVerificationOTP(to: string, otp_usage: Verification
     },
     body: JSON.stringify({
       to,
-      otp_usage
-    })
-
-  })
+      otp_usage,
+    }),
+  });
   if (!response.ok) {
-    return null
+    return null;
   }
 
-  return await response.json()
+  return await response.json();
 }

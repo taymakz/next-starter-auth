@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   },
   description: appDescription,
   icons: {
-    icon: '/images/favicon.ico'
-  }
+    icon: "/images/favicon.ico",
+  },
 };
 
 export default function RootLayout({
@@ -21,10 +21,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
-
-
-
   return (
     <html lang="fa-IR" dir="rtl" suppressHydrationWarning>
       <body>

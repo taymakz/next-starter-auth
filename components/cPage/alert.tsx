@@ -8,8 +8,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
-import { Button } from "@/components/ui/button"
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 
 export function AlertDialogDemo() {
   return (
@@ -26,14 +26,10 @@ export function AlertDialogDemo() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>
-            منصرف شدم
-          </AlertDialogCancel>
-          <AlertDialogAction>
-            تایید حذف
-          </AlertDialogAction>
+          <AlertDialogCancel>منصرف شدم</AlertDialogCancel>
+          <AlertDialogAction>تایید حذف</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

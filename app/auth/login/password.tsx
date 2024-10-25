@@ -1,85 +1,97 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { MESSAGE_ERROR_500 } from "@/lib/error-message"
-import { AuthenticationCheck, AuthenticationPassword, LoginUser } from "@/lib/actions/authenticate"
-import { AuthenticateSectionEnum, VerificationOTPUsageEnum } from "@/lib/types/authenticate"
-import { schemaAuthenticatePassword } from "@/lib/zod"
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { MESSAGE_ERROR_500 } from "@/lib/error-message";
+import { AuthenticationPassword } from "@/lib/actions/authenticate";
+import {
+  AuthenticateSectionEnum,
+  VerificationOTPUsageEnum,
+} from "@/lib/types/authenticate";
+import { schemaAuthenticatePassword } from "@/lib/zod";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { redirect, useRouter, useSearchParams } from "next/navigation"
-import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import * as z from 'zod'
-import { RequestVerificationOTP } from "@/lib/actions/messages"
+import * as z from "zod";
+import { RequestVerificationOTP } from "@/lib/actions/messages";
+
 interface PropsType {
-  username: string
-  setSection: (value: AuthenticateSectionEnum) => void
-  setCanLoginWithPassword: (value: boolean) => void
+  username: string;
+  setSection: (value: AuthenticateSectionEnum) => void;
+  setCanLoginWithPassword: (value: boolean) => void;
 }
 
-export function PasswordSection({ username, setSection, setCanLoginWithPassword }: PropsType) {
-
-  const [loading, setLoading] = useState<boolean>(false)
-  const router = useRouter()
+export function PasswordSection({
+  username,
+  setSection,
+  setCanLoginWithPassword,
+}: PropsType) {
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
   const searchParams = useSearchParams();
 
   const form = useForm<z.infer<typeof schemaAuthenticatePassword>>({
-    mode: 'all',
+    mode: "all",
     resolver: zodResolver(schemaAuthenticatePassword),
     defaultValues: {
-      password: ''
-    }
-  })
+      password: "",
+    },
+  });
 
   async function onSubmit(values: z.infer<typeof schemaAuthenticatePassword>) {
-
     const validationResult = schemaAuthenticatePassword.safeParse(values);
-    if (!validationResult.success)
-      return
-    setLoading(true)
-    const result = await AuthenticationPassword(username, values.password)
+    if (!validationResult.success) return;
+    setLoading(true);
+    const result = await AuthenticationPassword(username, values.password);
 
     if (result.success) {
-      toast(result.message)
-      router.push(searchParams.get('backURL') || '/')
-
+      toast(result.message);
+      router.push(searchParams.get("backURL") || "/");
     } else {
-      form.setError('password', { message: result?.message })
+      form.setError("password", { message: result?.message });
     }
-    setLoading(false)
-
+    setLoading(false);
   }
+
   async function redirectToOneTimePassword() {
-    if (loading) return
-    setLoading(true)
+    if (loading) return;
+    setLoading(true);
     const result = await RequestVerificationOTP(
       username,
-      VerificationOTPUsageEnum.AUTHENTICATE
-    )
+      VerificationOTPUsageEnum.AUTHENTICATE,
+    );
     if (!result) {
-      toast(MESSAGE_ERROR_500)
-      setLoading(false)
-      return
+      toast(MESSAGE_ERROR_500);
+      setLoading(false);
+      return;
     }
     if (result.success) {
-      setCanLoginWithPassword(true)
-      setSection(AuthenticateSectionEnum.OTP)
+      setCanLoginWithPassword(true);
+      setSection(AuthenticateSectionEnum.OTP);
     }
-    if (result.message) toast(result.message)
-    setLoading(false)
+    if (result.message) toast(result.message);
+    setLoading(false);
   }
+
   function rediectToForgotPassword() {
-    localStorage.setItem('username', username)
-    router.push('/auth/forgot')
+    localStorage.setItem("username", username);
+    router.push("/auth/forgot");
   }
+
   function getBack() {
-    setSection(AuthenticateSectionEnum.CHECK)
+    setSection(AuthenticateSectionEnum.CHECK);
   }
 
   return (
@@ -93,28 +105,26 @@ export function PasswordSection({ username, setSection, setCanLoginWithPassword 
         <ChevronRight />
       </Button>
       {/* Ttile */}
-      <h1 className="text-center font-medium text-lg mb-6">
+      <h1 className="mb-6 text-center text-lg font-medium">
         کلمه عبور را وارد کنید
-
       </h1>
-      <Form {...form} >
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" >
-
-
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           {/* Input */}
-          <div >
+          <div>
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem >
-                  <FormControl >
+                <FormItem>
+                  <FormControl>
                     <Input
                       type="password"
                       className="bg-transparent"
                       labelClass="bg-card"
                       dir="ltr"
-                      autoFocus {...field}
+                      autoFocus
+                      {...field}
                     />
                   </FormControl>
 
@@ -131,7 +141,7 @@ export function PasswordSection({ username, setSection, setCanLoginWithPassword 
             <li>
               <div
                 onClick={() => redirectToOneTimePassword()}
-                className="cursor-pointer flex items-center gap-x-1 text-sm text-primary duration-200 hover:text-primary/80"
+                className="flex cursor-pointer items-center gap-x-1 text-sm text-primary duration-200 hover:text-primary/80"
               >
                 <span>ورود با رمز یک بار مصرف</span>
                 <span>
@@ -142,8 +152,7 @@ export function PasswordSection({ username, setSection, setCanLoginWithPassword 
             <li>
               <div
                 onClick={() => rediectToForgotPassword()}
-                className="cursor-pointer flex items-center gap-x-1 text-sm text-primary duration-200 hover:text-primary/80"
-
+                className="flex cursor-pointer items-center gap-x-1 text-sm text-primary duration-200 hover:text-primary/80"
               >
                 <span> فراموشی رمز عبور </span>
                 <span>
@@ -154,15 +163,17 @@ export function PasswordSection({ username, setSection, setCanLoginWithPassword 
           </ul>
           {/* Button */}
 
-
-          <Button type="submit" className="w-full" size="lg" loading={loading} disabled={!form.formState.isValid || loading} >
+          <Button
+            type="submit"
+            className="w-full"
+            size="lg"
+            loading={loading}
+            disabled={!form.formState.isValid || loading}
+          >
             ورود
           </Button>
-
         </form>
-
-      </Form >
-
-    </div >
-  )
+      </Form>
+    </div>
+  );
 }

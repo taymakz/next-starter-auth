@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Drawer,
   DrawerClose,
@@ -10,7 +10,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/components/ui/drawer"
+} from "@/components/ui/drawer";
 
 const data = [
   {
@@ -52,7 +52,7 @@ const data = [
   {
     goal: 349,
   },
-]
+];
 
 export function DrawerDemo() {
   return (
@@ -66,9 +66,7 @@ export function DrawerDemo() {
             <DrawerTitle>Move Goal</DrawerTitle>
             <DrawerDescription>Set your daily activity goal.</DrawerDescription>
           </DrawerHeader>
-          <div className="p-4 pb-0">
-            hi
-          </div>
+          <div className="p-4 pb-0">hi</div>
           <DrawerFooter>
             <Button>Submit</Button>
             <DrawerClose asChild>
@@ -78,5 +76,5 @@ export function DrawerDemo() {
         </div>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }

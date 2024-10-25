@@ -57,11 +57,12 @@ export function ThemeToggle() {
       );
     });
   }
+
   return (
     <div>
       <button
         onClick={(e: any) => toggle(e)}
-        className="rounded-lg border p-2 text-muted-foreground duration-200 bg-muted"
+        className="rounded-lg border bg-muted p-2 text-muted-foreground duration-200"
       >
         <Sun className="hidden dark:block" size={22} />
 

@@ -1,16 +1,15 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { useMediaQuery } from "usehooks-ts"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { useMediaQuery } from "usehooks-ts";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -19,54 +18,47 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+} from "@/components/ui/drawer";
 
 interface Props {
-  children: React.ReactNode
-  openState: boolean,
-  setOpenState: (state: boolean) => void
-  title?: string,
-  description?: string
+  children: React.ReactNode;
+  openState: boolean;
+  setOpenState: (state: boolean) => void;
+  title?: string;
+  description?: string;
 }
 
-export function ResponsiveDialog({ children, openState, setOpenState, title, description }: Props) {
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+export function ResponsiveDialog({
+  children,
+  openState,
+  setOpenState,
+  title,
+  description,
+}: Props) {
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   if (isDesktop) {
     return (
       <Dialog open={openState} onOpenChange={setOpenState}>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>
-              {title}
-            </DialogTitle>
-            <DialogDescription>
-              {description}
-            </DialogDescription>
+            <DialogTitle>{title}</DialogTitle>
+            <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
-          <div className="px-6 pb-6">
-            {children}
-          </div>
+          <div className="px-6 pb-6">{children}</div>
         </DialogContent>
       </Dialog>
-    )
+    );
   }
 
   return (
     <Drawer open={openState} onOpenChange={setOpenState}>
       <DrawerContent>
-        <DrawerHeader >
-          <DrawerTitle>
-            {title}
-          </DrawerTitle>
-          <DrawerDescription>
-            {description}
-          </DrawerDescription>
+        <DrawerHeader>
+          <DrawerTitle>{title}</DrawerTitle>
+          <DrawerDescription>{description}</DrawerDescription>
         </DrawerHeader>
-        <div className="px-4">
-          {children}
-        </div>
+        <div className="px-4">{children}</div>
         <DrawerFooter className="pt-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
@@ -74,7 +66,7 @@ export function ResponsiveDialog({ children, openState, setOpenState, title, des
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
 
 function ProfileForm({ className }: React.ComponentProps<"form">) {
@@ -83,5 +75,5 @@ function ProfileForm({ className }: React.ComponentProps<"form">) {
       hi
       <Button type="submit">Save changes</Button>
     </form>
-  )
+  );
 }
